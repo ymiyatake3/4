@@ -1,27 +1,27 @@
 package main
 
 import (
+    "bufio"
     "fmt"
     "os"
 )
 
 
 func main() {
-    f, err := os.Open("nicknames.txt")
-    if err != nil {
-        fmt.Println("error")
-    }
-    defer f.Close()
+    var fp *os.File
+    var err error
 
-    buf := make([]byte, 1024)
-    for {
-        n, err := f.Read(buf)
-        if n == 0 {
-            break
-        }
-        if err != nil{
-            break
-        }
-        fmt.Println(string(buf[:n]))
+    fp, err = os.Open("links.txt")
+    if err != nil {
+        panic(err)
+    }
+    defer fp.Close()
+
+    scanner := bufio.NewScanner(fp)
+    for scanner.Scan() {
+        fmt.Println(scanner.Text())
+    }
+    if err := scanner.Err(); err != nil {
+        panic(err)
     }
 }
