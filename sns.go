@@ -8,6 +8,35 @@ import (
     "strconv"
 )
 
+func getNames() map[int]string{
+    var fp *os.File
+    var err error
+
+    fp, err = os.Open("nicknames.txt")
+    if err != nil {
+        panic(err)
+    }
+    defer fp.Close()
+
+    scanner := bufio.NewScanner(fp)
+
+    // number : name
+    names := map[int]string{}
+
+    for scanner.Scan() {
+        // Read a line
+        line := scanner.Text()
+
+        // Split A\tB to [A, B]
+        array := strings.Split(line, "\t")
+
+        num, _ := strconv.Atoi(array[0])
+        names[num] = array[1]
+    }
+
+    return names
+}
+
 func getLinks() [][]int{
     var fp *os.File
     var err error
@@ -50,14 +79,14 @@ func getLinks() [][]int{
 func main() {
     var matrix [49][49] bool
     links := getLinks()
-    //fmt.Println(links)
 
+    // Put link datas into adjacency matrix
     for i := 0; i < len(links); i++ {
         from := links[i][0]
         to := links[i][1]
         matrix[from][to] = true
     }
+
+    names := getNames()
     
 }
-
-//Next: matrixの中のlinksにある数字に該当する部分に印をつける
