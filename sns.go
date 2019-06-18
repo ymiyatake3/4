@@ -131,12 +131,9 @@ func bfs(matrix [49][49]bool, nameToNum map[string]int, numToName map[int]string
 }
 
 
-
-
-func main() {
+func test() {
     var matrix [49][49] bool
     links := makeLinksArray()
-    //links := [][]int{}
 
     // Put link datas into adjacency matrix
     for i := 0; i < len(links); i++ {
@@ -148,4 +145,25 @@ func main() {
     nameToNum, numToName := makeNamesMap()
 
     bfs(matrix, nameToNum, numToName)
+}
+
+func run() {
+    var matrix [49][49] bool
+    links := makeLinksArray()
+
+    // Put link datas into adjacency matrix
+    for i := 0; i < len(links); i++ {
+        from := links[i][0]
+        to := links[i][1]
+        matrix[from][to] = true
+    }
+
+    nameToNum, numToName := makeNamesMap()
+
+    bfs(matrix, nameToNum, numToName)
+}
+
+
+func main() {
+    run()
 }
