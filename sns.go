@@ -8,7 +8,7 @@ import (
     "strconv"
 )
 
-func makeNamesMap() map[int]string{
+func makeNamesMap() map[string]int{
     var fp *os.File
     var err error
 
@@ -20,8 +20,8 @@ func makeNamesMap() map[int]string{
 
     scanner := bufio.NewScanner(fp)
 
-    // number : name
-    names := map[int]string{}
+    // name : number
+    names := map[string]int{}
 
     for scanner.Scan() {
         // Read a line
@@ -31,7 +31,9 @@ func makeNamesMap() map[int]string{
         array := strings.Split(line, "\t")
 
         num, _ := strconv.Atoi(array[0])
-        names[num] = array[1]
+        name := array[1]
+
+        names[name] = num
     }
 
     return names
@@ -87,8 +89,12 @@ func main() {
         matrix[from][to] = true
     }
 
-    names := makeNamesMap()
+    nameToNum := makeNamesMap()
     myName := "alex"
 
-    
+    queue := make([]int, 0)
+
+    now := nameToNum[myName]
+    queue = append(queue, now)
+    fmt.Println(queue)
 }
