@@ -79,19 +79,23 @@ func makeLinksArray() [][]int{
 
 func bfs(matrix [49][49]bool, numToName map[int]string) {
     now := 0
-    target := "jcob"
+    target := "jacob"
 
     queue := make([]int, 0)
     queue = append(queue, now)
 
     find := false
 
+    // Step counter
+    cnt := 0
+
     for !find {
         if numToName[now] == target {
-            fmt.Println("Find!")
+            fmt.Println("Find! step = " + strconv.Itoa(cnt))
             find = true
         } else {
-            for i:= 0; i < 49; i++ {
+            // Search root from 'now'
+            for i := 0; i < 49; i++ {
                 if matrix[now][i] {
                     queue = append(queue, i)
                 }
@@ -99,6 +103,7 @@ func bfs(matrix [49][49]bool, numToName map[int]string) {
         }
         now = queue[0]
         queue = queue[1:]
+        cnt++
     }
 }
 
