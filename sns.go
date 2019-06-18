@@ -8,7 +8,7 @@ import (
     "strconv"
 )
 
-func makeNamesMap() map[string]int{
+func makeNamesMap() map[int]string{
     var fp *os.File
     var err error
 
@@ -21,7 +21,7 @@ func makeNamesMap() map[string]int{
     scanner := bufio.NewScanner(fp)
 
     // name : number
-    names := map[string]int{}
+    names := map[int]string{}
 
     for scanner.Scan() {
         // Read a line
@@ -33,7 +33,7 @@ func makeNamesMap() map[string]int{
         num, _ := strconv.Atoi(array[0])
         name := array[1]
 
-        names[name] = num
+        names[num] = name
     }
 
     return names
@@ -77,6 +77,31 @@ func makeLinksArray() [][]int{
     return links
 }
 
+func bfs(matrix [49][49]bool, numToName map[int]string) {
+    now := 0
+    target := "jcob"
+
+    queue := make([]int, 0)
+    queue = append(queue, now)
+
+    find := false
+
+    for !find {
+        if numToName[now] == target {
+            fmt.Println("Find!")
+            find = true
+        } else {
+            for i:= 0; i < 49; i++ {
+                if matrix[now][i] {
+                    queue = append(queue, i)
+                }
+            }
+        }
+        now = queue[0]
+        queue = queue[1:]
+    }
+}
+
 
 func main() {
     var matrix [49][49] bool
@@ -89,12 +114,7 @@ func main() {
         matrix[from][to] = true
     }
 
-    nameToNum := makeNamesMap()
-    myName := "alex"
+    numToName := makeNamesMap()
 
-    queue := make([]int, 0)
-
-    now := nameToNum[myName]
-    queue = append(queue, now)
-    fmt.Println(queue)
+    bfs(matrix, numToName)
 }
