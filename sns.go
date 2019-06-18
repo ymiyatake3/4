@@ -8,7 +8,7 @@ import (
     "strconv"
 )
 
-func getNames() map[int]string{
+func makeNamesMap() map[int]string{
     var fp *os.File
     var err error
 
@@ -37,7 +37,7 @@ func getNames() map[int]string{
     return names
 }
 
-func getLinks() [][]int{
+func makeLinksArray() [][]int{
     var fp *os.File
     var err error
 
@@ -78,7 +78,7 @@ func getLinks() [][]int{
 
 func main() {
     var matrix [49][49] bool
-    links := getLinks()
+    links := makeLinksArray()
 
     // Put link datas into adjacency matrix
     for i := 0; i < len(links); i++ {
@@ -87,6 +87,8 @@ func main() {
         matrix[from][to] = true
     }
 
-    names := getNames()
+    names := makeNamesMap()
+    myName := "alex"
+
     
 }
