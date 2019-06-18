@@ -8,7 +8,7 @@ import (
     "strconv"
 )
 
-func makeNamesMap() map[int]string{
+func makeNamesMap() (map[string]int, map[int]string) {
     var fp *os.File
     var err error
 
@@ -21,7 +21,10 @@ func makeNamesMap() map[int]string{
     scanner := bufio.NewScanner(fp)
 
     // name : number
-    names := map[int]string{}
+    nameToNum := map[string]int{}
+
+    // number : name
+    numToName := map[int]string{}
 
     for scanner.Scan() {
         // Read a line
@@ -33,13 +36,14 @@ func makeNamesMap() map[int]string{
         num, _ := strconv.Atoi(array[0])
         name := array[1]
 
-        names[num] = name
+        nameToNum[name] = num
+        numToName[num] = name
     }
 
-    return names
+    return nameToNum, numToName
 }
 
-func makeLinksArray() [][]int{
+func makeLinksArray() [][]int {
     var fp *os.File
     var err error
 
@@ -77,22 +81,26 @@ func makeLinksArray() [][]int{
     return links
 }
 
-func bfs(matrix [49][49]bool, numToName map[int]string) {
-    now := 0
-    target := "jacob"
+func bfs(matrix [49][49]bool, nameToNum map[string]int, numToName map[int]string) {
+    start := "jacob"
+    goal := "alex"
 
     queue := make([]int, 0)
-    queue = append(queue, now)
 
-    find := false
+    isFound := false
 
     // Step counter
-    cnt := 0
+    cnt := 1
 
-    for !find {
-        if numToName[now] == target {
-            fmt.Println("Find! step = " + strconv.Itoa(cnt))
-            find = true
+    now := nameToNum[start]
+    target := nameToNum[goal]
+
+    for !isFound {
+        fmt.Println(now)
+        fmt.Println(queue)
+        if now == target {
+            fmt.Println("Found " + goal + "! step = " + strconv.Itoa(cnt))
+            isFound = true
         } else {
             // Search root from 'now'
             for i := 0; i < 49; i++ {
@@ -100,6 +108,9 @@ func bfs(matrix [49][49]bool, numToName map[int]string) {
                     queue = append(queue, i)
                 }
             }
+
+            // To record the point of step count
+            queue = append(queue, 100)
         }
 
         if len(queue) == 0 {
@@ -111,7 +122,11 @@ func bfs(matrix [49][49]bool, numToName map[int]string) {
         now = queue[0]
         queue = queue[1:]
 
-        cnt++
+        if now == 100 {
+            cnt++
+            now = queue[0]
+            queue = queue[1:]
+        }
     }
 }
 
@@ -121,7 +136,7 @@ func bfs(matrix [49][49]bool, numToName map[int]string) {
 func main() {
     var matrix [49][49] bool
     links := makeLinksArray()
-    //links := [1]
+    //links := [][]int{}
 
     // Put link datas into adjacency matrix
     for i := 0; i < len(links); i++ {
@@ -130,7 +145,7 @@ func main() {
         matrix[from][to] = true
     }
 
-    numToName := makeNamesMap()
+    nameToNum, numToName := makeNamesMap()
 
-    bfs(matrix, numToName)
+    bfs(matrix, nameToNum, numToName)
 }
