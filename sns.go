@@ -101,16 +101,27 @@ func bfs(matrix [49][49]bool, numToName map[int]string) {
                 }
             }
         }
+
+        if len(queue) == 0 {
+            fmt.Println("Not found")
+            break
+        }
+
+        // Move to top of the queue
         now = queue[0]
         queue = queue[1:]
+
         cnt++
     }
 }
 
 
+
+
 func main() {
     var matrix [49][49] bool
     links := makeLinksArray()
+    //links := [1]
 
     // Put link datas into adjacency matrix
     for i := 0; i < len(links); i++ {
