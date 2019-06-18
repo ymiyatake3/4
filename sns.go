@@ -8,7 +8,7 @@ import (
     "strconv"
 )
 
-func getLinks() {
+func getLinks() [][]int{
     var fp *os.File
     var err error
 
@@ -43,11 +43,21 @@ func getLinks() {
         panic(err)
     }
 
-    fmt.Println(links)
+    return links
 }
 
 
 func main() {
-    //var matrix [49][49] boolean
-    getLinks()
+    var matrix [49][49] bool
+    links := getLinks()
+    //fmt.Println(links)
+
+    for i := 0; i < len(links); i++ {
+        from := links[i][0]
+        to := links[i][1]
+        matrix[from][to] = true
+    }
+    
 }
+
+//Next: matrixの中のlinksにある数字に該当する部分に印をつける
