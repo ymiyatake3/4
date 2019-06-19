@@ -83,6 +83,7 @@ func makeLinksArray() [][]int {
 func bfs(matrix [49][49]bool, start int, goal int) {
 
     queue := make([]int, 0)
+    var isConnected[49] bool
     isFound := false
 
     // Dummy node to count step
@@ -98,26 +99,31 @@ func bfs(matrix [49][49]bool, start int, goal int) {
         fmt.Println(now)
         fmt.Println(queue)
 
-        if now == target {
-            fmt.Println("Found! step = " + strconv.Itoa(cnt))
-            isFound = true
-            break
-        } else {
+        if !isConnected[now] {
 
-            // If there is next node
-            existNext := false
+            isConnected[now] = true
 
-            // Search root from 'now'
-            for i := 0; i < 49; i++ {
-                if matrix[now][i] {
-                    queue = append(queue, i)
-                    existNext = true
+            if now == target {
+                fmt.Println("Found! step = " + strconv.Itoa(cnt))
+                isFound = true
+                break
+            } else {
+
+                // If there is next node
+                existNext := false
+
+                // Search root from 'now'
+                for i := 0; i < 49; i++ {
+                    if matrix[now][i] {
+                        queue = append(queue, i)
+                        existNext = true
+                    }
                 }
-            }
 
-            if existNext {
-                // Add counting point
-                queue = append(queue, cntPoint)
+                if existNext {
+                    // Add counting point
+                    queue = append(queue, cntPoint)
+                }
             }
         }
 
@@ -153,22 +159,25 @@ func searchAllConnected(matrix [49][49]bool, start int) {
         fmt.Println(now)
         fmt.Println(queue)
 
-        isConnected[now] = true
+        if !isConnected[now] {
 
-        // If there is next node
-        existNext := false
+            isConnected[now] = true
 
-        // Search root from 'now'
-        for i := 0; i < 49; i++ {
-            if matrix[now][i] {
-                queue = append(queue, i)
-                existNext = true
+            // If there is next node
+            existNext := false
+
+            // Search root from 'now'
+            for i := 0; i < 49; i++ {
+                if matrix[now][i] {
+                    queue = append(queue, i)
+                    existNext = true
+                }
             }
-        }
 
-        if existNext {
-            // Add counting point
-            queue = append(queue, cntPoint)
+            if existNext {
+                // Add counting point
+                queue = append(queue, cntPoint)
+            }
         }
 
         // Move to top of the queue
@@ -243,6 +252,10 @@ func runTest() {
     fmt.Println("testCase 7:")
     link7 := [][]int{{0, 1}, {1, 2}}
     test("connected", link7, 0, 0)
+
+    fmt.Println("testCase 8:")
+    link8 := [][]int{{0, 1}, {1, 0}}
+    test("connected", link8, 0, 0)
 }
 
 func run() {
@@ -272,5 +285,5 @@ func run() {
 
 func main() {
     runTest()
-    run()
+    //run()
 }
