@@ -27,3 +27,8 @@ _- execution result -_
 ![Screenshot 2019-06-19 at 15 07 36](https://user-images.githubusercontent.com/34668695/59740799-1e2bf580-92a4-11e9-803d-2ebcbc3e6294.png)
 
   
+## wiki.go
+#### How to execute
+In the same directory with **wiki_links.txt** and **wiki_pages.txt**, input `go run wiki.go`.
+
+_**This program is not completed!**_
