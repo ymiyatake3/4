@@ -129,6 +129,11 @@ func bfs(matrix [49][49]bool, start int, goal int) {
             }
         }
 
+        if len(queue) == 0 {
+            fmt.Println("Not found")
+            break
+        }
+
         // Move to top of the queue
         now = queue[0]
         queue = queue[1:]
@@ -270,6 +275,9 @@ func runTest() {
 
     fmt.Println("testCase 6:")
     link6 := [][]int{{0, 1}, {0, 2}}
+    test("bfs", link6, 1, 2)
+
+    fmt.Println("testCase 6.5:")
     test("connected", link6, 0, 0)
 
     fmt.Println("testCase 7:")
@@ -279,6 +287,7 @@ func runTest() {
     fmt.Println("testCase 8:")
     link8 := [][]int{{0, 1}, {1, 0}}
     test("connected", link8, 0, 0)
+
 }
 
 func run() {
