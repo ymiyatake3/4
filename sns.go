@@ -300,7 +300,7 @@ func run() {
 
     fmt.Println("--------")
 
-    // Search who cannot connect from 'alex'
+    // Search all steps to the other nodes
     start = "alex"
     searchAllConnected(false, matrix, nameToNum[start])
 
