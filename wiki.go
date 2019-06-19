@@ -44,9 +44,9 @@ func setNamesMap() {
 }
 
 
-func makeLinksArray() [][]int {
+func makeAdjacencyList() map[int][]int {
 
-    links := [][]int{}
+    adjList := make(map[int][]int)
 
     var fp *os.File
     var err error
@@ -71,18 +71,17 @@ func makeLinksArray() [][]int {
         from, _ := strconv.Atoi(array[0])
         to, _ := strconv.Atoi(array[1])
 
-        link := []int{from, to}
-        links = append(links, link)
+        adjList[from] = append(adjList[from], to)
     }
 
     if err := scanner.Err(); err != nil {
         panic(err)
     }
 
-    return links
+    return adjList
 }
 
-func bfs(matrix [pageNum][pageNum]bool, start int, goal int) {
+func bfs(adjList map[int][]int, start int, goal int) {
 
     queue := make([]int, 0)
     var isConnected[pageNum] bool
@@ -117,11 +116,8 @@ func bfs(matrix [pageNum][pageNum]bool, start int, goal int) {
                 existNext := false
 
                 // Search root from 'now'
-                for i := 0; i < pageNum; i++ {
-                    if matrix[now][i] {
-                        queue = append(queue, i)
-                        existNext = true
-                    }
+                for i := 0; i < len(adjList[now]); i++ {
+                    queue = append(queue, adjList[now][i])
                 }
 
                 if existNext {
@@ -147,7 +143,7 @@ func bfs(matrix [pageNum][pageNum]bool, start int, goal int) {
     }
 }
 
-func searchAllConnected(isTest bool, matrix [pageNum][pageNum]bool, start int) {
+func searchAllConnected(isTest bool, adjList map[int][]int, start int) {
 
     queue := make([]int, 0)
     var isConnected[pageNum] bool
@@ -177,11 +173,8 @@ func searchAllConnected(isTest bool, matrix [pageNum][pageNum]bool, start int) {
             existNext := false
 
             // Search root from 'now'
-            for i := 0; i < pageNum; i++ {
-                if matrix[now][i] {
-                    queue = append(queue, i)
-                    existNext = true
-                }
+            for i := 0; i < len(adjList[now]); i++ {
+                queue = append(queue, adjList[now][i])
             }
 
             if existNext {
@@ -227,20 +220,19 @@ func searchAllConnected(isTest bool, matrix [pageNum][pageNum]bool, start int) {
 
 
 func test(mode string, links [][]int, start int, goal int) {
-    var matrix [pageNum][pageNum] bool
+    adjList := make(map[int][]int)
 
-    // Put link datas into adjacency matrix
+    // Put link datas into adjacency list
     for i := 0; i < len(links); i++ {
         from := links[i][0]
         to := links[i][1]
-        matrix[from][to] = true
+        adjList[from] = append(adjList[from], to)
     }
 
-
     if mode == "bfs" {
-        bfs(matrix, start, goal)
+        bfs(adjList, start, goal)
     } else if mode == "connected" {
-        searchAllConnected(true, matrix, start)
+        searchAllConnected(true, adjList, start)
     }
     fmt.Println("--------")
 }
@@ -281,29 +273,21 @@ func runTest() {
 }
 
 func run() {
-    links := makeLinksArray()
-    var matrix [pageNum][pageNum] bool
-
-    // Put link datas into adjacency matrix
-    for i := 0; i < len(links); i++ {
-        from := links[i][0]
-        to := links[i][1]
-        matrix[from][to] = true
-    }
+    adjList := makeAdjacencyList()
 
     /*
     // Count step from 'jacob' to 'alex'
     start := "jacob"
     goal := "alex"
     fmt.Println(start + " to " + goal)
-    bfs(matrix, nameToNum[start], nameToNum[goal])
+    bfs(adjList, nameToNum[start], nameToNum[goal])
     */
 
     //fmt.Println("--------")
 
     // Search all steps to the other nodes
     start := "アカマダラハナムグリ"
-    searchAllConnected(false, matrix, nameToNum[start])
+    searchAllConnected(false, adjList, nameToNum[start])
 
 }
 
