@@ -143,79 +143,6 @@ func bfs(adjList map[int][]int, start int, goal int) {
 }
 
 
-func searchAllConnected(isTest bool, adjList map[int][]int, start int) {
-
-    queue := make([]int, 0)
-    var isConnected[pageNum] bool
-
-    // Steps to reach each node
-    var count[pageNum] int
-
-    now := start
-
-    // Dummy node to count step
-    cntPoint := -1
-
-    // Step counter
-    cnt := 1
-
-    for {
-        // For debugging
-        fmt.Println(now)
-        fmt.Println(queue)
-
-        if !isConnected[now] {
-
-            isConnected[now] = true
-            count[now] = cnt
-
-            // If next root from 'now' exists
-            _, exist := adjList[now]
-            if exist {
-                // Add next nodes to queue
-                for i := 0; i < len(adjList[now]); i++ {
-                    queue = append(queue, adjList[now][i])
-                }
-                // Add counting point
-                queue = append(queue, cntPoint)
-            }
-        }
-
-        // Move to top of the queue
-        now = queue[0]
-        queue = queue[1:]
-
-        if now == cntPoint {
-            if len(queue) == 0 {
-                break
-            }
-            cnt++
-            now = queue[0]
-            queue = queue[1:]
-        }
-    }
-
-    // Print result
-    if isTest {
-        fmt.Println("Connected nodes: ")
-        for i := 0; i < len(isConnected); i++ {
-            if i == start {
-                fmt.Println(strconv.Itoa(i) + " : me")
-            } else if isConnected[i] && i != start {
-                fmt.Println(strconv.Itoa(i) + " : step = " + strconv.Itoa(count[i]))
-            }
-        }
-    } else {
-        for i := 0; i < len(isConnected); i++ {
-            if i == start {
-                fmt.Println(strconv.Itoa(i) + " : me")
-            } else if isConnected[i] && i != start {
-                fmt.Println(numToName[i] + " : step = " + strconv.Itoa(count[i]))
-            }
-        }
-    }
-}
-
 
 func test(mode string, links [][]int, start int, goal int) {
     adjList := make(map[int][]int)
@@ -264,22 +191,6 @@ func runTest() {
     fmt.Println("testCase 1-5:")
     test("bfs", link4, 1, 2)
 
-    // searchAllConnected
-    fmt.Println("testCase 2-1:")
-    test("connected", link1, 0, 0)
-
-    fmt.Println("testCase 2-2:")
-    test("connected", link2, 0, 0)
-
-    fmt.Println("testCase 2-3:")
-    test("connected", link3, 0, 0)
-
-    fmt.Println("testCase 2-4:")
-    test("connected", link4, 0, 0)
-
-    fmt.Println("testCase 2-5:")
-    test("connected", link5, 0, 0)
-
 }
 
 func run() {
@@ -292,6 +203,7 @@ func run() {
     snum, sexist := nameToNum[start]
     gnum, gexist := nameToNum[goal]
 
+    // Check if the words exist in pages list
     if !sexist {
         fmt.Println("The word " + start + "doesn't extsts.")
         return
@@ -301,20 +213,9 @@ func run() {
         return
     }
 
-    //start := numToName[210038]
-    //goal := numToName[37428]
     fmt.Println(start + " to " + goal)
     bfs(adjList, snum, gnum)
-    //bfs(adjList, 210038, 37428)
 
-    /*
-    //fmt.Println("--------")
-
-    // Search all steps to the other nodes
-    start = "アカマダラハナムグリ"
-    //searchAllConnected(false, adjList, nameToNum[start])
-    searchAllConnected(false, adjList, 210038)
-    */
 }
 
 func main() {
