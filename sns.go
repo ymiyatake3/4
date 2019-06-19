@@ -8,9 +8,10 @@ import (
     "strconv"
 )
 
-func makeNamesMap() map[string]int {
+var nameToNum map[string]int = map[string]int{}
+var numToName map[int]string = map[int]string{}
 
-    nameToNum := map[string]int{}
+func setNamesMap() {
 
     var fp *os.File
     var err error
@@ -36,9 +37,8 @@ func makeNamesMap() map[string]int {
         name := array[1]
 
         nameToNum[name] = num
+        numToName[num] = name
     }
-
-    return nameToNum
 }
 
 
@@ -145,11 +145,14 @@ func bfs(matrix [49][49]bool, start int, goal int) {
     }
 }
 
-func searchAllConnected(matrix [49][49]bool, start int) {
+func searchAllConnected(isTest bool, matrix [49][49]bool, start int) {
 
     queue := make([]int, 0)
     var isConnected[49] bool
+
+    // Steps to reach each node
     var count[49] int
+
     now := start
 
     // Dummy node to count step
@@ -200,13 +203,29 @@ func searchAllConnected(matrix [49][49]bool, start int) {
     }
 
     // Print result
-    fmt.Println("Connected people: ")
-    for i := 0; i < len(isConnected); i++ {
-        if isConnected[i] && i != start {
-            fmt.Println(strconv.Itoa(i) + " : step = " + strconv.Itoa(count[i]))
+    if isTest {
+        fmt.Println("Connected nodes: ")
+        for i := 0; i < len(isConnected); i++ {
+            if i == start {
+                fmt.Println(strconv.Itoa(i) + " : me")
+            } else if isConnected[i] && i != start {
+                fmt.Println(strconv.Itoa(i) + " : step = " + strconv.Itoa(count[i]))
+            }
+        }
+    } else {
+        for i := 0; i < len(isConnected); i++ {
+            if i == start {
+                fmt.Println(strconv.Itoa(i) + " : me")
+            } else if isConnected[i] && i != start {
+                fmt.Println(numToName[i] + " : step = " + strconv.Itoa(count[i]))
+            } else {
+                fmt.Println(numToName[i] + " : Not Connected")
+            }
         }
     }
 }
+
+
 
 func test(mode string, links [][]int, start int, goal int) {
     var matrix [49][49] bool
@@ -222,7 +241,7 @@ func test(mode string, links [][]int, start int, goal int) {
     if mode == "bfs" {
         bfs(matrix, start, goal)
     } else if mode == "connected" {
-        searchAllConnected(matrix, start)
+        searchAllConnected(true, matrix, start)
     }
     fmt.Println("--------")
 }
@@ -273,8 +292,6 @@ func run() {
         matrix[from][to] = true
     }
 
-    nameToNum := makeNamesMap()
-
     // Count step from 'jacob' to 'alex'
     start := "jacob"
     goal := "alex"
@@ -285,11 +302,12 @@ func run() {
 
     // Search who cannot connect from 'alex'
     start = "alex"
-    searchAllConnected(matrix, nameToNum[start])
+    searchAllConnected(false, matrix, nameToNum[start])
 
 }
 
 func main() {
+    setNamesMap()
     runTest()
     run()
 }
