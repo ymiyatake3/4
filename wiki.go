@@ -160,6 +160,7 @@ func test(mode string, links [][]int, start int, goal int) {
         fmt.Println(strconv.Itoa(start) + " to " + strconv.Itoa(goal))
         bfs(adjList, start, goal)
     }
+    fmt.Println("--------")
 }
 
 
