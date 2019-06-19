@@ -85,7 +85,6 @@ func bfs(adjList map[int][]int, start int, goal int) {
 
     queue := make([]int, 0)
     var isConnected[pageNum] bool
-    isFound := false
 
     // Dummy node to count step
     cntPoint := -1
@@ -96,11 +95,11 @@ func bfs(adjList map[int][]int, start int, goal int) {
     now := start
     target := goal
 
-    for !isFound {
+    for {
 
         // For debugging
-        //fmt.Println(now)
-        //fmt.Println(queue)
+        fmt.Println(now)
+        fmt.Println(queue)
 
         if !isConnected[now] {
 
@@ -108,23 +107,24 @@ func bfs(adjList map[int][]int, start int, goal int) {
 
             if now == target {
                 fmt.Println("Found! step = " + strconv.Itoa(cnt))
-                isFound = true
                 break
             } else {
-
-                // If there is next node
-                existNext := false
-
-                // Search root from 'now'
-                for i := 0; i < len(adjList[now]); i++ {
-                    queue = append(queue, adjList[now][i])
-                }
-
-                if existNext {
+                // If next root from 'now' exists
+                _, exist := adjList[now]
+                if exist {
+                    // Add next nodes to queue
+                    for i := 0; i < len(adjList[now]); i++ {
+                        queue = append(queue, adjList[now][i])
+                    }
                     // Add counting point
                     queue = append(queue, cntPoint)
                 }
             }
+        }
+
+        if len(queue) == 0 {
+            fmt.Println("Not found")
+            break
         }
 
         // Move to top of the queue
@@ -169,15 +169,13 @@ func searchAllConnected(isTest bool, adjList map[int][]int, start int) {
             isConnected[now] = true
             count[now] = cnt
 
-            // If there is next node
-            existNext := false
-
-            // Search root from 'now'
-            for i := 0; i < len(adjList[now]); i++ {
-                queue = append(queue, adjList[now][i])
-            }
-
-            if existNext {
+            // If next root from 'now' exists
+            _, exist := adjList[now]
+            if exist {
+                // Add next nodes to queue
+                for i := 0; i < len(adjList[now]); i++ {
+                    queue = append(queue, adjList[now][i])
+                }
                 // Add counting point
                 queue = append(queue, cntPoint)
             }
@@ -239,37 +237,45 @@ func test(mode string, links [][]int, start int, goal int) {
 
 
 func runTest() {
-    fmt.Println("testCase 1:")
+
     link1 := [][]int{{0, 1}}
+    link2 := [][]int{{0, 1}, {1, 2}}
+    link3 := [][]int{{0, 1}, {1, 2}, {0, 2}}
+    link4 := [][]int{{0, 1}, {0, 2}}
+    link5 := [][]int{{0, 1}, {1, 0}}
+
+    // bfs
+    fmt.Println("testCase 1-1:")
     test("bfs", link1, 0, 1)
 
-    fmt.Println("testCase 2:")
-    link2 := [][]int{{0, 1}, {0, 2}, {2, 1}}
-    test("bfs", link2, 0, 1)
+    fmt.Println("testCase 1-2:")
+    test("bfs", link1, 0, 2)
 
-    fmt.Println("testCase 3:")
-    link3 := [][]int{{0, 1}, {1, 2}}
-    test("bfs", link3, 0, 2)
+    fmt.Println("testCase 1-3:")
+    test("bfs", link2, 0, 2)
 
-    fmt.Println("testCase 4:")
-    link4 := [][]int{{0, 1}}
-    test("bfs", link4, 0, 2)
+    fmt.Println("testCase 1-4:")
+    test("bfs", link3, 0, 1)
 
-    fmt.Println("testCase 5:")
-    link5 := [][]int{{0, 1}}
+    fmt.Println("testCase 1-5:")
+    test("bfs", link4, 1, 2)
+
+    // searchAllConnected
+    fmt.Println("testCase 2-1:")
+    test("connected", link1, 0, 0)
+
+    fmt.Println("testCase 2-2:")
+    test("connected", link2, 0, 0)
+
+    fmt.Println("testCase 2-3:")
+    test("connected", link3, 0, 0)
+
+    fmt.Println("testCase 2-4:")
+    test("connected", link4, 0, 0)
+
+    fmt.Println("testCase 2-5:")
     test("connected", link5, 0, 0)
 
-    fmt.Println("testCase 6:")
-    link6 := [][]int{{0, 1}, {0, 2}}
-    test("connected", link6, 0, 0)
-
-    fmt.Println("testCase 7:")
-    link7 := [][]int{{0, 1}, {1, 2}}
-    test("connected", link7, 0, 0)
-
-    fmt.Println("testCase 8:")
-    link8 := [][]int{{0, 1}, {1, 0}}
-    test("connected", link8, 0, 0)
 }
 
 func run() {
@@ -293,6 +299,6 @@ func run() {
 
 func main() {
     setNamesMap()
-    //runTest()
-    run()
+    runTest()
+    //run()
 }
