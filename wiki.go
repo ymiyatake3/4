@@ -159,9 +159,6 @@ func test(mode string, links [][]int, start int, goal int) {
     if mode == "bfs" {
         fmt.Println(strconv.Itoa(start) + " to " + strconv.Itoa(goal))
         bfs(adjList, start, goal)
-    } else if mode == "connected" {
-        fmt.Println("from " + strconv.Itoa(start))
-        searchAllConnected(true, adjList, start)
     }
     fmt.Println("--------")
 }
@@ -173,7 +170,7 @@ func runTest() {
     link2 := [][]int{{0, 1}, {1, 2}}
     link3 := [][]int{{0, 1}, {1, 2}, {0, 2}}
     link4 := [][]int{{0, 1}, {0, 2}}
-    link5 := [][]int{{0, 1}, {1, 0}}
+    //link5 := [][]int{{0, 1}, {1, 0}}
 
     // bfs
     fmt.Println("testCase 1-1:")
