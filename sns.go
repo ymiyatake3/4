@@ -242,10 +242,13 @@ func test(mode string, links [][]int, start int, goal int) {
         matrix[from][to] = true
     }
 
+    fmt.Println(links)
 
     if mode == "bfs" {
+        fmt.Println(strconv.Itoa(start) + " to " + strconv.Itoa(goal))
         bfs(matrix, start, goal)
     } else if mode == "connected" {
+        fmt.Println("from " + strconv.Itoa(start))
         searchAllConnected(true, matrix, start)
     }
     fmt.Println("--------")
@@ -253,40 +256,44 @@ func test(mode string, links [][]int, start int, goal int) {
 
 
 func runTest() {
-    fmt.Println("testCase 1:")
+
     link1 := [][]int{{0, 1}}
+    link2 := [][]int{{0, 1}, {1, 2}}
+    link3 := [][]int{{0, 1}, {1, 2}, {0, 2}}
+    link4 := [][]int{{0, 1}, {0, 2}}
+    link5 := [][]int{{0, 1}, {1, 0}}
+
+    // bfs
+    fmt.Println("testCase 1-1:")
     test("bfs", link1, 0, 1)
 
-    fmt.Println("testCase 2:")
-    link2 := [][]int{{0, 1}, {0, 2}, {2, 1}}
-    test("bfs", link2, 0, 1)
+    fmt.Println("testCase 1-2:")
+    test("bfs", link1, 0, 2)
 
-    fmt.Println("testCase 3:")
-    link3 := [][]int{{0, 1}, {1, 2}}
-    test("bfs", link3, 0, 2)
+    fmt.Println("testCase 1-3:")
+    test("bfs", link2, 0, 2)
 
-    fmt.Println("testCase 4:")
-    link4 := [][]int{{0, 1}}
-    test("bfs", link4, 0, 2)
+    fmt.Println("testCase 1-4:")
+    test("bfs", link3, 0, 1)
 
-    fmt.Println("testCase 5:")
-    link5 := [][]int{{0, 1}}
+    fmt.Println("testCase 1-5:")
+    test("bfs", link4, 1, 2)
+
+    // searchAllConnected
+    fmt.Println("testCase 2-1:")
+    test("connected", link1, 0, 0)
+
+    fmt.Println("testCase 2-2:")
+    test("connected", link2, 0, 0)
+
+    fmt.Println("testCase 2-3:")
+    test("connected", link3, 0, 0)
+
+    fmt.Println("testCase 2-4:")
+    test("connected", link4, 0, 0)
+
+    fmt.Println("testCase 2-5:")
     test("connected", link5, 0, 0)
-
-    fmt.Println("testCase 6:")
-    link6 := [][]int{{0, 1}, {0, 2}}
-    test("bfs", link6, 1, 2)
-
-    fmt.Println("testCase 6.5:")
-    test("connected", link6, 0, 0)
-
-    fmt.Println("testCase 7:")
-    link7 := [][]int{{0, 1}, {1, 2}}
-    test("connected", link7, 0, 0)
-
-    fmt.Println("testCase 8:")
-    link8 := [][]int{{0, 1}, {1, 0}}
-    test("connected", link8, 0, 0)
 
 }
 
