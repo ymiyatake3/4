@@ -19,7 +19,7 @@ func setNamesMap() {
     var err error
 
     // Open file
-    fp, err = os.Open("nicknames.txt")
+    fp, err = os.Open("wiki_pages.txt")
     if err != nil {
         panic(err)
     }
@@ -52,7 +52,7 @@ func makeAdjacencyList() map[int][]int {
     var err error
 
     // Open file
-    fp, err = os.Open("links.txt")
+    fp, err = os.Open("wiki_links.txt")
     if err != nil {
         panic(err)
     }
@@ -143,6 +143,7 @@ func bfs(adjList map[int][]int, start int, goal int) {
     }
 }
 
+
 func searchAllConnected(isTest bool, adjList map[int][]int, start int) {
 
     queue := make([]int, 0)
@@ -161,8 +162,8 @@ func searchAllConnected(isTest bool, adjList map[int][]int, start int) {
 
     for {
         // For debugging
-        //fmt.Println(now)
-        //fmt.Println(queue)
+        fmt.Println(now)
+        fmt.Println(queue)
 
         if !isConnected[now] {
 
@@ -281,24 +282,24 @@ func runTest() {
 func run() {
     adjList := makeAdjacencyList()
 
-    /*
-    // Count step from 'jacob' to 'alex'
-    start := "jacob"
-    goal := "alex"
+    // Search and count step
+    start := numToName[210038]
+    goal := numToName[37428]
     fmt.Println(start + " to " + goal)
-    bfs(adjList, nameToNum[start], nameToNum[goal])
-    */
+    //bfs(adjList, nameToNum[start], nameToNum[goal])
+    bfs(adjList, 210038, 37428)
 
+    /*
     //fmt.Println("--------")
 
     // Search all steps to the other nodes
     start := "アカマダラハナムグリ"
     searchAllConnected(false, adjList, nameToNum[start])
-
+    */
 }
 
 func main() {
     setNamesMap()
     runTest()
-    //run()
+    run()
 }
