@@ -178,12 +178,12 @@ func run() {
 
     nameToNum := makeNamesMap()
 
+    // Count step from 'jacob' to 'alex'
     start := "jacob"
     goal := "alex"
-
     fmt.Println(start + " to " + goal)
-
     bfs(matrix, nameToNum[start], nameToNum[goal])
+
 }
 
 func main() {
