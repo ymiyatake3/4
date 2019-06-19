@@ -178,10 +178,12 @@ func run() {
 
     nameToNum := makeNamesMap()
 
-    start := nameToNum["jacob"]
-    goal := nameToNum["alex"]
+    start := "jacob"
+    goal := "alex"
 
-    bfs(matrix, start, goal)
+    fmt.Println(start + " to " + goal)
+
+    bfs(matrix, nameToNum[start], nameToNum[goal])
 }
 
 func main() {
