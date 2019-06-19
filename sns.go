@@ -96,25 +96,25 @@ func bfs(matrix [49][49]bool, start int, goal int) {
     for !isFound {
         fmt.Println(now)
         fmt.Println(queue)
+
         if now == target {
             fmt.Println("Found! step = " + strconv.Itoa(cnt))
             isFound = true
             break
         } else {
+            nextNum := 0
             // Search root from 'now'
             for i := 0; i < 49; i++ {
                 if matrix[now][i] {
                     queue = append(queue, i)
+                    nextNum++
                 }
             }
 
-            // To record the point of step count
-            queue = append(queue, cntPoint)
-        }
-
-        if len(queue) == 0 {
-            fmt.Println("Not found")
-            break
+            if nextNum != 0 {
+                // To record the point of step count
+                queue = append(queue, cntPoint)
+            }
         }
 
         // Move to top of the queue
@@ -122,6 +122,10 @@ func bfs(matrix [49][49]bool, start int, goal int) {
         queue = queue[1:]
 
         if now == cntPoint {
+            if len(queue) == 0 {
+                fmt.Println("Not found")
+                break
+            }
             cnt++
             now = queue[0]
             queue = queue[1:]
