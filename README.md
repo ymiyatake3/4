@@ -16,7 +16,7 @@ _- execution result -_
 _- execution result -_
 
 ![Screenshot 2019-06-19 at 15 08 13](https://user-images.githubusercontent.com/34668695/59740803-1e2bf580-92a4-11e9-99ce-8e87b65fef08.png)
-(後略)
+(omitting the rest)
 
 - Small tests
   - testCase 1-4 use function **bfs**
