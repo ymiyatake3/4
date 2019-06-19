@@ -148,20 +148,20 @@ func test(links [][]int, start int, goal int) {
 }
 
 func runTest() {
-    link1 := [][]int{{0, 1}}
     fmt.Println("testCase 1:")
+    link1 := [][]int{{0, 1}}
     test(link1, 0, 1)
 
-    link2 := [][]int{{0, 1}, {0, 2}, {2, 1}}
     fmt.Println("testCase 2:")
+    link2 := [][]int{{0, 1}, {0, 2}, {2, 1}}
     test(link2, 0, 1)
 
-    link3 := [][]int{{0, 1}, {1, 2}}
     fmt.Println("testCase 3:")
+    link3 := [][]int{{0, 1}, {1, 2}}
     test(link3, 0, 2)
 
-    link4 := [][]int{{0, 1}}
     fmt.Println("testCase 4:")
+    link4 := [][]int{{0, 1}}
     test(link4, 0, 2)
 }
 
