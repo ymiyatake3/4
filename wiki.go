@@ -96,10 +96,9 @@ func bfs(adjList map[int][]int, start int, goal int) {
     target := goal
 
     for {
-
         // For debugging
-        fmt.Println(now)
-        fmt.Println(queue)
+        //fmt.Println(now)
+        //fmt.Println(queue)
 
         if !isConnected[now] {
 
@@ -228,9 +227,13 @@ func test(mode string, links [][]int, start int, goal int) {
         adjList[from] = append(adjList[from], to)
     }
 
+    fmt.Println(links)
+
     if mode == "bfs" {
+        fmt.Println(strconv.Itoa(start) + " to " + strconv.Itoa(goal))
         bfs(adjList, start, goal)
     } else if mode == "connected" {
+        fmt.Println("from " + strconv.Itoa(start))
         searchAllConnected(true, adjList, start)
     }
     fmt.Println("--------")
@@ -283,18 +286,34 @@ func run() {
     adjList := makeAdjacencyList()
 
     // Search and count step
-    start := numToName[210038]
-    goal := numToName[37428]
+    start := "Google"
+    goal := "渋谷"
+
+    snum, sexist := nameToNum[start]
+    gnum, gexist := nameToNum[goal]
+
+    if !sexist {
+        fmt.Println("The word " + start + "doesn't extsts.")
+        return
+    }
+    if !gexist {
+        fmt.Println("The word " + goal + "doesn't extsts.")
+        return
+    }
+
+    //start := numToName[210038]
+    //goal := numToName[37428]
     fmt.Println(start + " to " + goal)
-    //bfs(adjList, nameToNum[start], nameToNum[goal])
-    bfs(adjList, 210038, 37428)
+    bfs(adjList, snum, gnum)
+    //bfs(adjList, 210038, 37428)
 
     /*
     //fmt.Println("--------")
 
     // Search all steps to the other nodes
-    start := "アカマダラハナムグリ"
-    searchAllConnected(false, adjList, nameToNum[start])
+    start = "アカマダラハナムグリ"
+    //searchAllConnected(false, adjList, nameToNum[start])
+    searchAllConnected(false, adjList, 210038)
     */
 }
 
