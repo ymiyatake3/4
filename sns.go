@@ -9,9 +9,13 @@ import (
 )
 
 func makeNamesMap() map[string]int {
+
+    nameToNum := map[string]int{}
+
     var fp *os.File
     var err error
 
+    // Open file
     fp, err = os.Open("nicknames.txt")
     if err != nil {
         panic(err)
@@ -20,9 +24,6 @@ func makeNamesMap() map[string]int {
 
     scanner := bufio.NewScanner(fp)
 
-    // name : number
-    nameToNum := map[string]int{}
-
     for scanner.Scan() {
         // Read a line
         line := scanner.Text()
@@ -30,6 +31,7 @@ func makeNamesMap() map[string]int {
         // Split A\tB to [A, B]
         array := strings.Split(line, "\t")
 
+        // Get number and name data
         num, _ := strconv.Atoi(array[0])
         name := array[1]
 
@@ -41,9 +43,13 @@ func makeNamesMap() map[string]int {
 
 
 func makeLinksArray() [][]int {
+
+    links := [][]int{}
+
     var fp *os.File
     var err error
 
+    // Open file
     fp, err = os.Open("links.txt")
     if err != nil {
         panic(err)
@@ -51,8 +57,6 @@ func makeLinksArray() [][]int {
     defer fp.Close()
 
     scanner := bufio.NewScanner(fp)
-    links := [][]int{}
-    cnt := 0
 
     for scanner.Scan() {
         // Read a line
@@ -67,8 +71,6 @@ func makeLinksArray() [][]int {
 
         link := []int{from, to}
         links = append(links, link)
-
-        cnt++
     }
 
     if err := scanner.Err(); err != nil {
@@ -81,7 +83,6 @@ func makeLinksArray() [][]int {
 func bfs(matrix [49][49]bool, start int, goal int) {
 
     queue := make([]int, 0)
-
     isFound := false
 
     // Dummy node to count step
@@ -102,17 +103,20 @@ func bfs(matrix [49][49]bool, start int, goal int) {
             isFound = true
             break
         } else {
-            nextNum := 0
+
+            // If there is next node
+            existNext := false
+
             // Search root from 'now'
             for i := 0; i < 49; i++ {
                 if matrix[now][i] {
                     queue = append(queue, i)
-                    nextNum++
+                    existNext = true
                 }
             }
 
-            if nextNum != 0 {
-                // To record the point of step count
+            if existNext {
+                // Add counting point
                 queue = append(queue, cntPoint)
             }
         }
