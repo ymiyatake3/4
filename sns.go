@@ -43,6 +43,8 @@ func makeNamesMap() (map[string]int, map[int]string) {
     return nameToNum, numToName
 }
 
+
+
 func makeLinksArray() [][]int {
     var fp *os.File
     var err error
@@ -131,9 +133,8 @@ func bfs(matrix [49][49]bool, nameToNum map[string]int, numToName map[int]string
 }
 
 
-func test() {
-    var matrix [49][49] bool
-    links := makeLinksArray()
+func test(links [][]int, nodeNum int) {
+    var matrix [nodeNum][nodeNum] bool
 
     // Put link datas into adjacency matrix
     for i := 0; i < len(links); i++ {
@@ -165,5 +166,6 @@ func run() {
 
 
 func main() {
-    run()
+    //run()
+    test()
 }
