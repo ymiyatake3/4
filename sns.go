@@ -96,8 +96,10 @@ func bfs(matrix [49][49]bool, start int, goal int) {
     target := goal
 
     for !isFound {
-        fmt.Println(now)
-        fmt.Println(queue)
+
+        // For debugging
+        //fmt.Println(now)
+        //fmt.Println(queue)
 
         if !isConnected[now] {
 
@@ -147,6 +149,7 @@ func searchAllConnected(matrix [49][49]bool, start int) {
 
     queue := make([]int, 0)
     var isConnected[49] bool
+    var count[49] int
     now := start
 
     // Dummy node to count step
@@ -156,12 +159,14 @@ func searchAllConnected(matrix [49][49]bool, start int) {
     cnt := 1
 
     for {
-        fmt.Println(now)
-        fmt.Println(queue)
+        // For debugging
+        //fmt.Println(now)
+        //fmt.Println(queue)
 
         if !isConnected[now] {
 
             isConnected[now] = true
+            count[now] = cnt
 
             // If there is next node
             existNext := false
@@ -194,14 +199,13 @@ func searchAllConnected(matrix [49][49]bool, start int) {
         }
     }
 
-    fmt.Print("Connected people: ")
+    // Print result
+    fmt.Println("Connected people: ")
     for i := 0; i < len(isConnected); i++ {
         if isConnected[i] && i != start {
-            fmt.Print(i)
-            fmt.Print(" ")
+            fmt.Println(strconv.Itoa(i) + " : step = " + strconv.Itoa(count[i]))
         }
     }
-    fmt.Println()
 }
 
 func test(mode string, links [][]int, start int, goal int) {
@@ -277,6 +281,8 @@ func run() {
     fmt.Println(start + " to " + goal)
     bfs(matrix, nameToNum[start], nameToNum[goal])
 
+    fmt.Println("--------")
+
     // Search who cannot connect from 'alex'
     start = "alex"
     searchAllConnected(matrix, nameToNum[start])
@@ -285,5 +291,5 @@ func run() {
 
 func main() {
     runTest()
-    //run()
+    run()
 }
