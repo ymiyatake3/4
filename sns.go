@@ -233,7 +233,7 @@ func test(mode string, links [][]int, start int, goal int) {
     if mode == "bfs" {
         fmt.Println(strconv.Itoa(start) + " to " + strconv.Itoa(goal))
         bfs(matrix, start, goal)
-    } else if mode == "connected" {
+    } else if mode == "all" {
         fmt.Println("from " + strconv.Itoa(start))
         showAllSteps(true, matrix, start)
     }
@@ -267,19 +267,19 @@ func runTest() {
 
     // showAllSteps
     fmt.Println("testCase 2-1:")
-    test("connected", link1, 0, 0)
+    test("all", link1, 0, 0)
 
     fmt.Println("testCase 2-2:")
-    test("connected", link2, 0, 0)
+    test("all", link2, 0, 0)
 
     fmt.Println("testCase 2-3:")
-    test("connected", link3, 0, 0)
+    test("all", link3, 0, 0)
 
     fmt.Println("testCase 2-4:")
-    test("connected", link4, 0, 0)
+    test("all", link4, 0, 0)
 
     fmt.Println("testCase 2-5:")
-    test("connected", link5, 0, 0)
+    test("all", link5, 0, 0)
 }
 
 func run() {
