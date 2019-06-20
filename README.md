@@ -38,7 +38,7 @@ _- execution result -_
 
 ![Screenshot 2019-06-20 at 19 35 16](https://user-images.githubusercontent.com/34668695/59844190-30d22780-9395-11e9-9422-295e16f92366.png)
 
-## wiki.go
+## wiki_isolated.go
 - It shows pages that doesn't have connection with the other ones.
 
 _- execution result（抜粋） -_
