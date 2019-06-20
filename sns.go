@@ -83,7 +83,7 @@ func makeLinksArray() [][]int {
 func bfs(matrix [49][49]bool, start int, goal int) {
 
     queue := make([]int, 0)
-    var isConnected[49] bool
+    var visited[49] bool
     isFound := false
 
     // Dummy node to count step
@@ -101,9 +101,9 @@ func bfs(matrix [49][49]bool, start int, goal int) {
         //fmt.Println(now)
         //fmt.Println(queue)
 
-        if !isConnected[now] {
+        if !visited[now] {
 
-            isConnected[now] = true
+            visited[now] = true
 
             if now == target {
                 fmt.Println("Found! step = " + strconv.Itoa(cnt))
@@ -153,7 +153,7 @@ func bfs(matrix [49][49]bool, start int, goal int) {
 func searchAllConnected(isTest bool, matrix [49][49]bool, start int) {
 
     queue := make([]int, 0)
-    var isConnected[49] bool
+    var visited[49] bool
 
     // Steps to reach each node
     var count[49] int
@@ -171,9 +171,9 @@ func searchAllConnected(isTest bool, matrix [49][49]bool, start int) {
         //fmt.Println(now)
         //fmt.Println(queue)
 
-        if !isConnected[now] {
+        if !visited[now] {
 
-            isConnected[now] = true
+            visited[now] = true
             count[now] = cnt
 
             // If there is next node
@@ -210,18 +210,18 @@ func searchAllConnected(isTest bool, matrix [49][49]bool, start int) {
     // Print result
     if isTest {
         fmt.Println("Connected nodes: ")
-        for i := 0; i < len(isConnected); i++ {
+        for i := 0; i < len(visited); i++ {
             if i == start {
                 fmt.Println(strconv.Itoa(i) + " : me")
-            } else if isConnected[i] && i != start {
+            } else if visited[i] && i != start {
                 fmt.Println(strconv.Itoa(i) + " : step = " + strconv.Itoa(count[i]))
             }
         }
     } else {
-        for i := 0; i < len(isConnected); i++ {
+        for i := 0; i < len(visited); i++ {
             if i == start {
                 fmt.Println(strconv.Itoa(i) + " : me")
-            } else if isConnected[i] && i != start {
+            } else if visited[i] && i != start {
                 fmt.Println(numToName[i] + " : step = " + strconv.Itoa(count[i]))
             } else {
                 fmt.Println(numToName[i] + " : Not Connected")
@@ -294,7 +294,6 @@ func runTest() {
 
     fmt.Println("testCase 2-5:")
     test("connected", link5, 0, 0)
-
 }
 
 func run() {
@@ -310,16 +309,17 @@ func run() {
 
     // Count step from 'jacob' to 'alex'
     start := "jacob"
-    goal := "alex"
+    goal := "billy"
     fmt.Println(start + " to " + goal)
     bfs(matrix, nameToNum[start], nameToNum[goal])
 
+    /*
     fmt.Println("--------")
 
     // Search all steps to the other nodes
     start = "alex"
     searchAllConnected(false, matrix, nameToNum[start])
-
+    */
 }
 
 func main() {
