@@ -45,7 +45,7 @@ _- execution result（抜粋） -_
 
 ![Screenshot 2019-06-20 at 19 16 56](https://user-images.githubusercontent.com/34668695/59844363-afc76000-9395-11e9-89e0-4e9a9d26f641.png)
 
-- It shows 1438 isolated pages, but actually that pages have links in their real page.
+- It shows 1438 isolated pages, but actually that pages have links in their real page (??).
 
 ![Screenshot 2019-06-20 at 20 02 30](https://user-images.githubusercontent.com/34668695/59844636-5e6ba080-9396-11e9-8f5c-4b69f1001e89.png)
 
