@@ -102,27 +102,20 @@ func bfs(matrix [nodeNum][nodeNum]bool, start int, goal int) {
         //fmt.Println(now)
         //fmt.Println(queue)
 
-        if !visited[now] {
+        visited[now] = true
 
-            visited[now] = true
-
-            if now == goal {
-                fmt.Println("Found! step = " + strconv.Itoa(cnt))
-                break
-            } else {
-
-                // Search root from 'now'
-                for i := 0; i < nodeNum; i++ {
-                    if matrix[now][i] {
+        if now == goal {
+            fmt.Println("Found! step = " + strconv.Itoa(cnt))
+            break
+        } else {
+            // Search root from 'now'
+            for i := 0; i < nodeNum; i++ {
+                if matrix[now][i] {
+                    if !visited[i] {
                         queue = append(queue, i)
                     }
                 }
             }
-        }
-
-        if len(queue) == 0 {
-            fmt.Println("Not found")
-            break
         }
 
         // Move to top of the queue
