@@ -137,7 +137,7 @@ func bfs(adjList map[int][]int, start int, goal int) {
             cnt++
             now = queue[0]
 
-            // remove first element and add cntPoint at last
+            // Remove first element and add cntPoint at last
             queue = append(queue[1:], cntPoint)
 
         }
@@ -196,7 +196,7 @@ func run() {
     adjList := makeAdjacencyList()
 
     start := "Google"
-    goal := "渋谷"
+    goal := "クアッカワラビー"
 
     snum, sexist := nameToNum[start]
     gnum, gexist := nameToNum[goal]
@@ -220,6 +220,6 @@ func run() {
 
 func main() {
     setNamesMap()
-    runTest()
+    //runTest()
     run()
 }
