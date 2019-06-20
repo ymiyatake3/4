@@ -98,9 +98,6 @@ func bfs(matrix [nodeNum][nodeNum]bool, start int, goal int) {
     now := start
 
     for {
-        fmt.Print(cnt)
-        fmt.Print(": ")
-
         // For debugging
         //fmt.Println(now)
         //fmt.Println(queue)
@@ -143,31 +140,24 @@ func bfs(matrix [nodeNum][nodeNum]bool, start int, goal int) {
             // remove first element and add cntPoint at last
             queue = append(queue[1:], cntPoint)
         }
-        for i:= 0; i < len(visited); i++ {
-            if visited[i] {
-                fmt.Print(i)
-                fmt.Print(" ")
-            }
-        }
-        fmt.Println()
     }
 }
 
-func searchAllConnected(isTest bool, matrix [nodeNum][nodeNum]bool, start int) {
-
-    queue := make([]int, 0)
-    var visited[nodeNum] bool
-
-    // Steps to reach each node
-    var count[nodeNum] int
-
-    now := start
+func showAllSteps(isTest bool, matrix [nodeNum][nodeNum]bool, start int) {
 
     // Dummy node to count step
     cntPoint := -1
 
     // Step counter
-    cnt := 1
+    cnt := 0
+
+    queue := make([]int, 0)
+    queue = append(queue, cntPoint)
+
+    var visited[nodeNum] bool
+    var count[nodeNum] int
+
+    now := start
 
     for {
         // For debugging
@@ -179,20 +169,11 @@ func searchAllConnected(isTest bool, matrix [nodeNum][nodeNum]bool, start int) {
             visited[now] = true
             count[now] = cnt
 
-            // If there is next node
-            existNext := false
-
             // Search root from 'now'
             for i := 0; i < nodeNum; i++ {
                 if matrix[now][i] {
                     queue = append(queue, i)
-                    existNext = true
                 }
-            }
-
-            if existNext {
-                // Add counting point
-                queue = append(queue, cntPoint)
             }
         }
 
@@ -206,7 +187,9 @@ func searchAllConnected(isTest bool, matrix [nodeNum][nodeNum]bool, start int) {
             }
             cnt++
             now = queue[0]
-            queue = queue[1:]
+
+            // remove first element and add cntPoint at last
+            queue = append(queue[1:], cntPoint)
         }
     }
 
@@ -225,9 +208,9 @@ func searchAllConnected(isTest bool, matrix [nodeNum][nodeNum]bool, start int) {
             if i == start {
                 fmt.Println(strconv.Itoa(i) + " : me")
             } else if visited[i] && i != start {
-                fmt.Println(numToName[i] + " : step = " + strconv.Itoa(count[i]))
+                fmt.Println(strconv.Itoa(i) + " " + numToName[i] + " : step = " + strconv.Itoa(count[i]))
             } else {
-                fmt.Println(numToName[i] + " : Not Connected")
+                fmt.Println(strconv.Itoa(i) + " " + numToName[i] + " : Not Connected")
             }
         }
     }
@@ -252,7 +235,7 @@ func test(mode string, links [][]int, start int, goal int) {
         bfs(matrix, start, goal)
     } else if mode == "connected" {
         fmt.Println("from " + strconv.Itoa(start))
-        searchAllConnected(true, matrix, start)
+        showAllSteps(true, matrix, start)
     }
     fmt.Println("--------")
 }
@@ -282,7 +265,7 @@ func runTest() {
     fmt.Println("testCase 1-5:")
     test("bfs", link4, 1, 2)
 
-    // searchAllConnected
+    // showAllSteps
     fmt.Println("testCase 2-1:")
     test("connected", link1, 0, 0)
 
@@ -312,17 +295,16 @@ func run() {
 
     // Count step from 'jacob' to 'alex'
     start := "jacob"
-    goal := "billy"
+    goal := "alex"
     fmt.Println(start + " to " + goal)
     bfs(matrix, nameToNum[start], nameToNum[goal])
 
-    /*
     fmt.Println("--------")
 
     // Search all steps to the other nodes
     start = "alex"
-    searchAllConnected(false, matrix, nameToNum[start])
-    */
+    showAllSteps(false, matrix, nameToNum[start])
+
 }
 
 func main() {
