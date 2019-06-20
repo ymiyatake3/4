@@ -19,16 +19,18 @@ _- execution result -_
 
 (omitting the rest)
 
-- and small tests
-  - testCase 1-x use function **bfs**
-  - testCase 2-x use function **showAllSteps**
-  
-_- execution result -_
-  
-<img width="172" alt="test1" src="https://user-images.githubusercontent.com/34668695/59796719-0e022d80-9319-11e9-876f-01e248642960.png"> <img width="178" alt="test2" src="https://user-images.githubusercontent.com/34668695/59796721-0e022d80-9319-11e9-9397-20af66f143f1.png"> <img width="149" alt="test3" src="https://user-images.githubusercontent.com/34668695/59796722-0e022d80-9319-11e9-8e67-231c925daaa7.png">
+- and small tests.
   
 ## wiki.go
 #### How to execute
-In the same directory with **wiki_links.txt** and **wiki_pages.txt**, input `go run wiki.go`.
+In the same directory with **wiki_links.txt** (originally links.txt) and **wiki_pages.txt** (originally pages.txt), input `go run wiki.go`.
 
-_**This program is not completed!**_
+ - It search the shortest route and count steps from one node to another.
+ 
+_- execution result -_
+
+![Screenshot 2019-06-20 at 19 29 18](https://user-images.githubusercontent.com/34668695/59843814-498e0d80-9394-11e9-8326-cd8c987dec42.png)
+
+![Screenshot 2019-06-20 at 19 29 05](https://user-images.githubusercontent.com/34668695/59843815-4a26a400-9394-11e9-85b9-ef4e437fd2b9.png)
+
+![Screenshot 2019-06-20 at 19 28 49](https://user-images.githubusercontent.com/34668695/59843816-4a26a400-9394-11e9-927d-2fa76d4eb1a3.png)
