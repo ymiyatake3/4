@@ -84,7 +84,7 @@ func makeAdjacencyList() map[int][]int {
 func bfs(adjList map[int][]int, start int, goal int) {
 
     queue := make([]int, 0)
-    var isConnected[pageNum] bool
+    var visited[pageNum] bool
 
     // Dummy node to count step
     cntPoint := -1
@@ -100,15 +100,15 @@ func bfs(adjList map[int][]int, start int, goal int) {
         //fmt.Println(now)
         //fmt.Println(queue)
 
-        if !isConnected[now] {
+        if !visited[now] {
 
-            isConnected[now] = true
+            visited[now] = true
 
             if now == target {
                 fmt.Println("Found! step = " + strconv.Itoa(cnt))
                 break
             } else {
-                // If next root from 'now' exists
+                // If next node from 'now' exists
                 _, exist := adjList[now]
                 if exist {
                     // Add next nodes to queue
@@ -193,7 +193,6 @@ func runTest() {
 func run() {
     adjList := makeAdjacencyList()
 
-    // Search and count step
     start := "Google"
     goal := "渋谷"
 
@@ -211,6 +210,8 @@ func run() {
     }
 
     fmt.Println(start + " to " + goal)
+
+    // Search and count step
     bfs(adjList, snum, gnum)
 
 }
