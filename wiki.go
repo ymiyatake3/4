@@ -11,7 +11,7 @@ import (
 var nameToNum map[string]int = map[string]int{}
 var numToName map[int]string = map[int]string{}
 
-const pageNum int = 1483276
+const nodeNum int = 1483276
 
 func setNamesMap() {
 
@@ -83,17 +83,18 @@ func makeAdjacencyList() map[int][]int {
 
 func bfs(adjList map[int][]int, start int, goal int) {
 
-    queue := make([]int, 0)
-    var visited[pageNum] bool
-
     // Dummy node to count step
     cntPoint := -1
 
     // Step counter
-    cnt := 1
+    cnt := 0
+
+    queue := make([]int, 0)
+    queue = append(queue, cntPoint)
+
+    var visited[nodeNum] bool
 
     now := start
-    target := goal
 
     for {
         // For debugging
@@ -104,7 +105,7 @@ func bfs(adjList map[int][]int, start int, goal int) {
 
             visited[now] = true
 
-            if now == target {
+            if now == goal {
                 fmt.Println("Found! step = " + strconv.Itoa(cnt))
                 break
             } else {
@@ -137,7 +138,10 @@ func bfs(adjList map[int][]int, start int, goal int) {
             }
             cnt++
             now = queue[0]
-            queue = queue[1:]
+
+            // remove first element and add cntPoint at last
+            queue = append(queue[1:], cntPoint)
+
         }
     }
 }
