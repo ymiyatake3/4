@@ -92,10 +92,10 @@ func bfs(matrix [nodeNum][nodeNum]bool, start int, goal int) {
 
     queue := make([]int, 0)
     queue = append(queue, cntPoint)
+
     var visited[nodeNum] bool
 
     now := start
-    target := goal
 
     for {
         fmt.Print(cnt)
@@ -109,7 +109,7 @@ func bfs(matrix [nodeNum][nodeNum]bool, start int, goal int) {
 
             visited[now] = true
 
-            if now == target {
+            if now == goal {
                 fmt.Println("Found! step = " + strconv.Itoa(cnt))
                 break
             } else {
