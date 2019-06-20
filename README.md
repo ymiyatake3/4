@@ -11,16 +11,17 @@ _- execution result -_
 
 ![Screenshot 2019-06-19 at 15 08 03](https://user-images.githubusercontent.com/34668695/59740801-1e2bf580-92a4-11e9-9b4b-29db68e23d16.png)
 
-- A function to display if the other nodes are connected from one node (**searchAllConnected**)
+- A function to display if the other nodes are connected from one node (**showAllSteps**)
 
 _- execution result -_
 
-![Screenshot 2019-06-19 at 15 08 13](https://user-images.githubusercontent.com/34668695/59740803-1e2bf580-92a4-11e9-99ce-8e87b65fef08.png)
+![Screenshot 2019-06-20 at 16 16 45](https://user-images.githubusercontent.com/34668695/59828873-e93ca300-9376-11e9-829a-0523f70327e2.png)
+
 (omitting the rest)
 
 - and small tests
   - testCase 1-x use function **bfs**
-  - testCase 2-x use function **searchAllConnected**
+  - testCase 2-x use function **showAllSteps**
   
 _- execution result -_
   
