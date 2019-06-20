@@ -11,6 +11,8 @@ import (
 var nameToNum map[string]int = map[string]int{}
 var numToName map[int]string = map[int]string{}
 
+const nodeNum int = 49
+
 func setNamesMap() {
 
     var fp *os.File
@@ -80,21 +82,24 @@ func makeLinksArray() [][]int {
     return links
 }
 
-func bfs(matrix [49][49]bool, start int, goal int) {
-
-    queue := make([]int, 0)
-    var visited[49] bool
+func bfs(matrix [nodeNum][nodeNum]bool, start int, goal int) {
 
     // Dummy node to count step
     cntPoint := -1
 
     // Step counter
-    cnt := 1
+    cnt := 0
+
+    queue := make([]int, 0)
+    queue = append(queue, cntPoint)
+    var visited[nodeNum] bool
 
     now := start
     target := goal
 
     for {
+        fmt.Print(cnt)
+        fmt.Print(": ")
 
         // For debugging
         //fmt.Println(now)
@@ -109,20 +114,11 @@ func bfs(matrix [49][49]bool, start int, goal int) {
                 break
             } else {
 
-                // If there is next node
-                existNext := false
-
                 // Search root from 'now'
-                for i := 0; i < 49; i++ {
+                for i := 0; i < nodeNum; i++ {
                     if matrix[now][i] {
                         queue = append(queue, i)
-                        existNext = true
                     }
-                }
-
-                if existNext {
-                    // Add counting point
-                    queue = append(queue, cntPoint)
                 }
             }
         }
@@ -143,18 +139,27 @@ func bfs(matrix [49][49]bool, start int, goal int) {
             }
             cnt++
             now = queue[0]
-            queue = queue[1:]
+
+            // remove first element and add cntPoint at last
+            queue = append(queue[1:], cntPoint)
         }
+        for i:= 0; i < len(visited); i++ {
+            if visited[i] {
+                fmt.Print(i)
+                fmt.Print(" ")
+            }
+        }
+        fmt.Println()
     }
 }
 
-func searchAllConnected(isTest bool, matrix [49][49]bool, start int) {
+func searchAllConnected(isTest bool, matrix [nodeNum][nodeNum]bool, start int) {
 
     queue := make([]int, 0)
-    var visited[49] bool
+    var visited[nodeNum] bool
 
     // Steps to reach each node
-    var count[49] int
+    var count[nodeNum] int
 
     now := start
 
@@ -178,7 +183,7 @@ func searchAllConnected(isTest bool, matrix [49][49]bool, start int) {
             existNext := false
 
             // Search root from 'now'
-            for i := 0; i < 49; i++ {
+            for i := 0; i < nodeNum; i++ {
                 if matrix[now][i] {
                     queue = append(queue, i)
                     existNext = true
@@ -231,7 +236,7 @@ func searchAllConnected(isTest bool, matrix [49][49]bool, start int) {
 
 
 func test(mode string, links [][]int, start int, goal int) {
-    var matrix [49][49] bool
+    var matrix [nodeNum][nodeNum] bool
 
     // Put link datas into adjacency matrix
     for i := 0; i < len(links); i++ {
@@ -296,7 +301,7 @@ func runTest() {
 
 func run() {
     links := makeLinksArray()
-    var matrix [49][49] bool
+    var matrix [nodeNum][nodeNum] bool
 
     // Put link datas into adjacency matrix
     for i := 0; i < len(links); i++ {
