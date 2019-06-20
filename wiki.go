@@ -116,8 +116,6 @@ func bfs(adjList map[int][]int, start int, goal int) {
                     for i := 0; i < len(adjList[now]); i++ {
                         queue = append(queue, adjList[now][i])
                     }
-                    // Add counting point
-                    queue = append(queue, cntPoint)
                 }
             }
         }
