@@ -38,6 +38,16 @@ _- execution result -_
 
 ![Screenshot 2019-06-20 at 19 35 16](https://user-images.githubusercontent.com/34668695/59844190-30d22780-9395-11e9-9422-295e16f92366.png)
 
+(6/21追記)
+
+Changed the program to show the route.
+
+<img width="333" alt="ikebukuro" src="https://user-images.githubusercontent.com/34668695/59896275-e9927800-9422-11e9-8831-5a0347643491.png">
+
+but with more than 3 steps, it took so long time and couldn't run.
+
+<img width="308" alt="GoogleToOcha" src="https://user-images.githubusercontent.com/34668695/59896328-1d6d9d80-9423-11e9-8569-4acba9721150.png">
+
 ## wiki_isolated.go
 - It shows pages that doesn't have connection with the other ones.
 
