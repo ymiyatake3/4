@@ -81,67 +81,45 @@ func makeAdjacencyList() map[int][]int {
     return adjList
 }
 
-func bfs(adjList map[int][]int, start int, goal int) {
+func bfs(adjList map[int][]int, start int, goal int) []int {
 
-    // Dummy node to count step
-    cntPoint := -1
-
-    // Step counter
-    cnt := 0
-
-    queue := make([]int, 0)
-    queue = append(queue, cntPoint)
+    queue := make([][]int, 0)
+    firstRoute := []int{start}
+    queue = append(queue, firstRoute)
 
     var visited[nodeNum] bool
 
-    now := start
+    for !(len(queue) == 0) {
+        route := queue[0]
+        now := route[len(route) - 1]
+        visited[now] = true
 
-    for {
         // For debugging
+        //fmt.Println(route)
         //fmt.Println(now)
-        //fmt.Println(queue)
 
-        if !visited[now] {
+        if now == goal {
+            fmt.Println("Found!")
+            return route
+        }
 
-            visited[now] = true
-
-            if now == goal {
-                fmt.Println("Found! step = " + strconv.Itoa(cnt))
-                break
-            } else {
-                // If next node from 'now' exists
-                _, exist := adjList[now]
-                if exist {
-                    // Add next nodes to queue
-                    for i := 0; i < len(adjList[now]); i++ {
-                        queue = append(queue, adjList[now][i])
-                    }
+        // If next node from 'now' exists
+        _, exist := adjList[now]
+        if exist {
+            // Make next routes and add them to queue
+            for i := 0; i < len(adjList[now]); i++ {
+                nextNode := adjList[now][i]
+                if !visited[nextNode] {
+                    newRoute := append(route, nextNode)
+                    queue = append(queue, newRoute)
                 }
             }
         }
-
-        if len(queue) == 0 {
-            fmt.Println("Not found")
-            break
-        }
-
-        // Move to top of the queue
-        now = queue[0]
         queue = queue[1:]
-
-        if now == cntPoint {
-            if len(queue) == 0 {
-                fmt.Println("Not found")
-                break
-            }
-            cnt++
-            now = queue[0]
-
-            // Remove first element and add cntPoint at last
-            queue = append(queue[1:], cntPoint)
-
-        }
     }
+    fmt.Println("Not Found")
+    notFound := []int{}
+    return notFound
 }
 
 
@@ -158,10 +136,9 @@ func test(mode string, links [][]int, start int, goal int) {
 
     fmt.Println(links)
 
-    if mode == "bfs" {
-        fmt.Println(strconv.Itoa(start) + " to " + strconv.Itoa(goal))
-        bfs(adjList, start, goal)
-    }
+    fmt.Println(strconv.Itoa(start) + " to " + strconv.Itoa(goal))
+    fmt.Println(bfs(adjList, start, goal))
+
     fmt.Println("--------")
 }
 
@@ -196,7 +173,7 @@ func run() {
     adjList := makeAdjacencyList()
 
     start := "Google"
-    goal := "クアッカワラビー"
+    goal := "お茶の水女子大学"
 
     snum, sexist := nameToNum[start]
     gnum, gexist := nameToNum[goal]
@@ -214,7 +191,10 @@ func run() {
     fmt.Println(start + " to " + goal)
 
     // Search and count step
-    bfs(adjList, snum, gnum)
+    route := bfs(adjList, snum, gnum)
+    for i:= 0; i < len(route); i++ {
+        fmt.Println(numToName[route[i]])
+    }
 
 }
 
